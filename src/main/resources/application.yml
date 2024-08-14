@@ -17,3 +17,4 @@ spring:
 bot:
   name: ${BOT_NAME}
   token: ${BOT_TOKEN}
+  creator-id: ${BOT_CREATOR_ID}
