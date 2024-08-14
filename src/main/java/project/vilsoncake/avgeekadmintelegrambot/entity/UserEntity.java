@@ -57,10 +57,4 @@ public class UserEntity {
 
     @Column(name = "created_at", updatable = false)
     private Date createdAt = new Date();
-
-    public UserEntity(String username, Long chatId, UserState state) {
-        this.username = username;
-        this.chatId = chatId;
-        this.state = state;
-    }
 }
