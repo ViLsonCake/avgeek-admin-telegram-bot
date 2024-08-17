@@ -18,3 +18,9 @@ bot:
   name: ${BOT_NAME}
   token: ${BOT_TOKEN}
   creator-id: ${BOT_CREATOR_ID}
+
+github:
+  base-url: https://api.github.com/repos/
+  access-token: ${GITHUB_ACCESS_TOKEN}
+  username: ${GITHUB_USERNAME}
+  repository-name: ${REPOSITORY_NAME}

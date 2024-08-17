@@ -1,6 +1,7 @@
 package project.vilsoncake.avgeekadmintelegrambot.utils;
 
 import org.springframework.stereotype.Component;
+import project.vilsoncake.avgeekadmintelegrambot.dto.ReferrerDto;
 import project.vilsoncake.avgeekadmintelegrambot.entity.UserEntity;
 
 import java.util.List;
@@ -37,5 +38,17 @@ public class MessageUtils {
         table.append("</pre>\n");
 
         return table.toString();
+    }
+
+    public String createReferrersList(List<ReferrerDto> referrers) {
+        StringBuilder referrersList = new StringBuilder();
+
+        for (ReferrerDto referrer : referrers) {
+            referrersList.append(String.format("• %s: %s", referrer.getReferrer(), referrer.getUniques()));
+        }
+
+        referrersList.append("---------------------------------");
+
+        return referrersList.toString();
     }
 }

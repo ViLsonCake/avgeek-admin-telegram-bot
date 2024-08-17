@@ -11,4 +11,16 @@ public class BotMessageConst {
             """;
     public static final String LINK_COMMAND_TEXT = "https://github.com/ViLsonCake/avgeek-telegram-bot";
     public static final String PING_COMMAND_TEXT = "pong";
+    public static final String TRAFFIC_COMMAND_TEXT = """
+            ---------------------------------
+            Weekly Repository Traffic
+            ---------------------------------
+            Views: %s
+            Unique views: %s
+            ---------------------------------
+            Clones: %s
+            Unique cloners: %s
+            ---------------------------------
+            Referral sources
+            """;
 }

@@ -30,6 +30,9 @@ public class BotMessageHandler {
                 case USERS_COMMAND_NAME:
                     bot.execute(botService.usersBotCommand(username, id));
                     break;
+                case TRAFFIC_COMMAND_NAME:
+                    bot.execute(botService.trafficBotCommand(username, id));
+                    break;
                 case LINK_COMMAND_NAME:
                     bot.execute(botService.linkBotCommand(id));
                     break;

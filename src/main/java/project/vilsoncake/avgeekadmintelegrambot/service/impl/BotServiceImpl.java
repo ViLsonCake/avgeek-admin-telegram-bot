@@ -3,9 +3,11 @@ package project.vilsoncake.avgeekadmintelegrambot.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import project.vilsoncake.avgeekadmintelegrambot.dto.WeeklyReportDto;
 import project.vilsoncake.avgeekadmintelegrambot.entity.UserEntity;
 import project.vilsoncake.avgeekadmintelegrambot.repository.UserReadOnlyRepository;
 import project.vilsoncake.avgeekadmintelegrambot.service.BotService;
+import project.vilsoncake.avgeekadmintelegrambot.service.TrafficService;
 import project.vilsoncake.avgeekadmintelegrambot.utils.MessageUtils;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import static project.vilsoncake.avgeekadmintelegrambot.constant.BotMessageConst
 public class BotServiceImpl implements BotService {
 
     private final UserReadOnlyRepository userReadOnlyRepository;
+    private final TrafficService trafficService;
     private final MessageUtils messageUtils;
 
     @Override
@@ -39,6 +42,21 @@ public class BotServiceImpl implements BotService {
         message.setChatId(id);
         message.setParseMode(HTML_PARSE_MODE);
         message.setText(table);
+
+        return message;
+    }
+
+    @Override
+    public SendMessage trafficBotCommand(String username, String id) {
+        WeeklyReportDto weeklyReportDto = trafficService.getWeeklyReport();
+
+        String messageText = String.format(TRAFFIC_COMMAND_TEXT, weeklyReportDto.getViews(), weeklyReportDto.getUniqueViews(), weeklyReportDto.getClones(), weeklyReportDto.getUniqueCloners());
+        String referrersList = messageUtils.createReferrersList(weeklyReportDto.getReferrers());
+
+        SendMessage message = new SendMessage();
+        message.setChatId(id);
+        message.setParseMode(HTML_PARSE_MODE);
+        message.setText("<pre>" + messageText + referrersList + "\n</pre>");
 
         return message;
     }
