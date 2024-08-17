@@ -44,7 +44,7 @@ public class MessageUtils {
         StringBuilder referrersList = new StringBuilder();
 
         for (ReferrerDto referrer : referrers) {
-            referrersList.append(String.format("• %s: %s", referrer.getReferrer(), referrer.getUniques()));
+            referrersList.append(String.format("• %s: %s\n", referrer.getReferrer(), referrer.getUniques()));
         }
 
         referrersList.append("---------------------------------");
