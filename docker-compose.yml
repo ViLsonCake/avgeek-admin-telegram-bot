@@ -1,4 +1,5 @@
 services:
+
   admin-telegram-bot:
     container_name: admin-telegram-bot
     build: .
@@ -6,3 +7,18 @@ services:
       - .env
     ports:
       - '8081:8081'
+
+  mongodb:
+    image: mongo:latest
+    container_name: avgeek-mongo
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - mongo_storage:/mongo/data
+
+volumes:
+  mongo_storage:
