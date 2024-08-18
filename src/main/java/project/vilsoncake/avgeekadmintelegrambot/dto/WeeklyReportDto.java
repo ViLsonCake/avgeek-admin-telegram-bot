@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class WeeklyReportDto {
     private int views;
-    private int uniqueViews;
+    private int uniqueVisitors;
     private int todayUniqueViews;
     private int clones;
     private int uniqueCloners;

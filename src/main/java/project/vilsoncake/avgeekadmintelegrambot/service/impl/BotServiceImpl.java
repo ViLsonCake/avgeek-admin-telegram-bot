@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import project.vilsoncake.avgeekadmintelegrambot.dto.WeeklyReportDto;
-import project.vilsoncake.avgeekadmintelegrambot.entity.UserEntity;
+import project.vilsoncake.avgeekadmintelegrambot.entity.jpa.UserEntity;
 import project.vilsoncake.avgeekadmintelegrambot.repository.UserReadOnlyRepository;
 import project.vilsoncake.avgeekadmintelegrambot.service.BotService;
 import project.vilsoncake.avgeekadmintelegrambot.service.TrafficService;

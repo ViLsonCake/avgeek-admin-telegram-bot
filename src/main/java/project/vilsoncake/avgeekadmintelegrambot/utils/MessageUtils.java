@@ -3,7 +3,8 @@ package project.vilsoncake.avgeekadmintelegrambot.utils;
 import org.springframework.stereotype.Component;
 import project.vilsoncake.avgeekadmintelegrambot.dto.ReferrerDto;
 import project.vilsoncake.avgeekadmintelegrambot.dto.WeeklyReportDto;
-import project.vilsoncake.avgeekadmintelegrambot.entity.UserEntity;
+import project.vilsoncake.avgeekadmintelegrambot.entity.document.DailyTrafficDocument;
+import project.vilsoncake.avgeekadmintelegrambot.entity.jpa.UserEntity;
 
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class MessageUtils {
         text.append(outline);
 
         String views = String.format(TRAFFIC_VIEWS_TEMPLATE, weeklyReportDto.getViews());
-        String uniqueViews = String.format(TRAFFIC_UNIQUE_VIEWS_TEMPLATE, weeklyReportDto.getUniqueViews());
+        String uniqueViews = String.format(TRAFFIC_UNIQUE_VIEWS_TEMPLATE, weeklyReportDto.getUniqueVisitors());
         String todayUniqueViews = String.format(TRAFFIC_TODAY_UNIQUE_VIEWS_TEMPLATE, weeklyReportDto.getTodayUniqueViews());
 
 
@@ -94,6 +95,37 @@ public class MessageUtils {
             String referrerData = String.format(TRAFFIC_REFERRER_TEMPLATE, referrer.getReferrer(), referrer.getUniques());
             text.append(String.format(tableColumnTemplate, referrerData));
         }
+
+        text.append(outline);
+
+        text.append("</pre>");
+
+        return text.toString();
+    }
+
+    public String createDailyTrafficReport(DailyTrafficDocument todayTrafficDocument) {
+        StringBuilder text = new StringBuilder("<pre>\n");
+
+        String outline = "|" + "-".repeat(TODAY_TRAFFIC_TABLE_TITLE.length() + 3) + "|" + "\n";
+        String tableColumnTemplate = String.format(TRAFFIC_COLUMN_TEMPLATE, TODAY_TRAFFIC_TABLE_TITLE.length() + 1);
+
+        text.append(outline);
+        text.append(String.format(tableColumnTemplate, TODAY_TRAFFIC_TABLE_TITLE));
+        text.append(outline);
+
+        String views = String.format(TRAFFIC_VIEWS_TEMPLATE, todayTrafficDocument.getViews());
+        String uniqueViews = String.format(TRAFFIC_UNIQUE_VIEWS_TEMPLATE, todayTrafficDocument.getUniqueVisitors());
+
+        text.append(String.format(tableColumnTemplate, views));
+        text.append(String.format(tableColumnTemplate, uniqueViews));
+
+        text.append(outline);
+
+        String clones = String.format(TRAFFIC_CLONES_TEMPLATE, todayTrafficDocument.getClones());
+        String uniqueCloners = String.format(TRAFFIC_UNIQUE_CLONERS_TEMPLATE, todayTrafficDocument.getUniqueCloners());
+
+        text.append(String.format(tableColumnTemplate, clones));
+        text.append(String.format(tableColumnTemplate, uniqueCloners));
 
         text.append(outline);
 

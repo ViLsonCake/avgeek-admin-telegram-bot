@@ -1,6 +1,6 @@
 package project.vilsoncake.avgeekadmintelegrambot.repository;
 
-import project.vilsoncake.avgeekadmintelegrambot.entity.UserEntity;
+import project.vilsoncake.avgeekadmintelegrambot.entity.jpa.UserEntity;
 
 import java.util.UUID;
 

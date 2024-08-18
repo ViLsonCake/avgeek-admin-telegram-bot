@@ -1,4 +1,4 @@
-package project.vilsoncake.avgeekadmintelegrambot.entity;
+package project.vilsoncake.avgeekadmintelegrambot.entity.jpa;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
