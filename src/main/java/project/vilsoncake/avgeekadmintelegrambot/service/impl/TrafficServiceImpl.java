@@ -4,13 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import project.vilsoncake.avgeekadmintelegrambot.dto.GithubApiClonesResponse;
-import project.vilsoncake.avgeekadmintelegrambot.dto.GithubApiViewsResponse;
-import project.vilsoncake.avgeekadmintelegrambot.dto.ReferrerDto;
-import project.vilsoncake.avgeekadmintelegrambot.dto.WeeklyReportDto;
+import project.vilsoncake.avgeekadmintelegrambot.dto.*;
 import project.vilsoncake.avgeekadmintelegrambot.property.GithubApiProperties;
 import project.vilsoncake.avgeekadmintelegrambot.service.TrafficService;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static project.vilsoncake.avgeekadmintelegrambot.constant.ApiUrlConst.*;
@@ -32,8 +31,10 @@ public class TrafficServiceImpl implements TrafficService {
         WeeklyReportDto weeklyReportDto = new WeeklyReportDto();
         weeklyReportDto.setViews(views.getCount());
         weeklyReportDto.setUniqueViews(views.getUniques());
+        weeklyReportDto.setTodayUniqueViews(getTodayViews(views.getViews()));
         weeklyReportDto.setClones(clones.getCount());
         weeklyReportDto.setUniqueCloners(clones.getUniques());
+        weeklyReportDto.setTodayUniqueCloners(getTodayClones(clones.getClones()));
         weeklyReportDto.setReferrers(referrers);
 
         return weeklyReportDto;
@@ -66,5 +67,43 @@ public class TrafficServiceImpl implements TrafficService {
                 .retrieve()
                 .bodyToMono(typeReference)
                 .block();
+    }
+
+    @Override
+    public int getTodayViews(List<ViewDto> views) {
+        Date todayDate = new Date();
+        Calendar todayCalendar = Calendar.getInstance();
+        todayCalendar.setTime(todayDate);
+
+        for (ViewDto view : views) {
+            Calendar viewCalendar = Calendar.getInstance();
+            viewCalendar.setTime(view.getTimestamp());
+
+            if (todayCalendar.get(Calendar.YEAR) == viewCalendar.get(Calendar.YEAR) &&
+                    todayCalendar.get(Calendar.DAY_OF_YEAR) == viewCalendar.get(Calendar.DAY_OF_YEAR)) {
+                return view.getUniques();
+            }
+        }
+
+        return 0;
+    }
+
+    @Override
+    public int getTodayClones(List<CloneDto> clones) {
+        Date todayDate = new Date();
+        Calendar todayCalendar = Calendar.getInstance();
+        todayCalendar.setTime(todayDate);
+
+        for (CloneDto clone : clones) {
+            Calendar cloneCalendar = Calendar.getInstance();
+            cloneCalendar.setTime(clone.getTimestamp());
+
+            if (todayCalendar.get(Calendar.YEAR) == cloneCalendar.get(Calendar.YEAR) &&
+                    todayCalendar.get(Calendar.DAY_OF_YEAR) == cloneCalendar.get(Calendar.DAY_OF_YEAR)) {
+                return clone.getUniques();
+            }
+        }
+
+        return 0;
     }
 }

@@ -50,13 +50,12 @@ public class BotServiceImpl implements BotService {
     public SendMessage trafficBotCommand(String username, String id) {
         WeeklyReportDto weeklyReportDto = trafficService.getWeeklyReport();
 
-        String messageText = String.format(TRAFFIC_COMMAND_TEXT, weeklyReportDto.getViews(), weeklyReportDto.getUniqueViews(), weeklyReportDto.getClones(), weeklyReportDto.getUniqueCloners());
-        String referrersList = messageUtils.createReferrersList(weeklyReportDto.getReferrers());
+        String messageText = messageUtils.createTrafficTable(weeklyReportDto);
 
         SendMessage message = new SendMessage();
         message.setChatId(id);
         message.setParseMode(HTML_PARSE_MODE);
-        message.setText("<pre>" + messageText + referrersList + "\n</pre>");
+        message.setText(messageText);
 
         return message;
     }
