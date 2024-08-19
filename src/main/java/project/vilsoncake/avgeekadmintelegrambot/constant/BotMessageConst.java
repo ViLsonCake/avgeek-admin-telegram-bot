@@ -29,4 +29,14 @@ public class BotMessageConst {
             Today views: *%s*
             Today unique visitors: *%s*
             """;
+    public static final String NEW_USER_TEXT = """
+            *New Bot User*
+            
+            Username: *%s*
+            Airport: *%s*
+            Language: *%s*
+            Created at: *%s*
+            
+            Bot users count: *%s*
+            """;
 }

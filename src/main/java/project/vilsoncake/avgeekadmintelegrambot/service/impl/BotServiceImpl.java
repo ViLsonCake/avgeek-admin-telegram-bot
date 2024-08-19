@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import project.vilsoncake.avgeekadmintelegrambot.dto.WeeklyReportDto;
 import project.vilsoncake.avgeekadmintelegrambot.entity.jpa.UserEntity;
-import project.vilsoncake.avgeekadmintelegrambot.repository.UserReadOnlyRepository;
 import project.vilsoncake.avgeekadmintelegrambot.service.BotService;
 import project.vilsoncake.avgeekadmintelegrambot.service.TrafficService;
 import project.vilsoncake.avgeekadmintelegrambot.utils.MessageUtils;
@@ -18,7 +17,7 @@ import static project.vilsoncake.avgeekadmintelegrambot.constant.BotMessageConst
 @RequiredArgsConstructor
 public class BotServiceImpl implements BotService {
 
-    private final UserReadOnlyRepository userReadOnlyRepository;
+    private final UsersInfoService usersInfoService;
     private final TrafficService trafficService;
     private final MessageUtils messageUtils;
 
@@ -34,7 +33,7 @@ public class BotServiceImpl implements BotService {
 
     @Override
     public SendMessage usersBotCommand(String username, String id) {
-        List<UserEntity> users = userReadOnlyRepository.findAll();
+        List<UserEntity> users = usersInfoService.findAllEntities();
 
         String table = messageUtils.createUserTable(users);
 

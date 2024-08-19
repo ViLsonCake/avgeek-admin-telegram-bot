@@ -7,8 +7,11 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import project.vilsoncake.avgeekadmintelegrambot.dto.GithubApiViewsResponse;
 import project.vilsoncake.avgeekadmintelegrambot.entity.document.DailyTrafficDocument;
+import project.vilsoncake.avgeekadmintelegrambot.entity.document.UsersInfoDocument;
+import project.vilsoncake.avgeekadmintelegrambot.entity.jpa.UserEntity;
 import project.vilsoncake.avgeekadmintelegrambot.property.BotProperties;
 import project.vilsoncake.avgeekadmintelegrambot.service.TrafficService;
+import project.vilsoncake.avgeekadmintelegrambot.service.impl.UsersInfoService;
 import project.vilsoncake.avgeekadmintelegrambot.utils.MessageUtils;
 
 import java.util.Date;
@@ -25,12 +28,37 @@ public class ScheduleSender {
 
     private final BotSender botSender;
     private final TrafficService trafficService;
+    private final UsersInfoService usersInfoService;
     private final BotProperties botProperties;
     private final MessageUtils messageUtils;
 
     @Scheduled(fixedDelay = CHECK_NEW_USERS_DELAY_IN_MINUTES, timeUnit = TimeUnit.MINUTES)
     public void sendNewUsers() {
-        // TODO
+        List<UsersInfoDocument> usersInfo = usersInfoService.findAllUsersInfo();
+        List<UserEntity> users = usersInfoService.findAllEntities();
+
+        if (usersInfo.isEmpty()) {
+            usersInfoService.addNewDailyUsersInfo();
+        }
+
+        if (!DateUtils.isSameDay(usersInfo.get(0).getDate(), new Date())) {
+            usersInfoService.addNewDailyUsersInfo();
+        }
+
+        UsersInfoDocument todayUsersInfo = usersInfoService.getLastAddedUsersInfo();
+
+        if (users.size() == todayUsersInfo.getUsersCount()) {
+            return;
+        }
+
+        UserEntity newUser = usersInfoService.getLastAddedUserEntity();
+
+        SendMessage message = new SendMessage();
+        message.setChatId(botProperties.getCreatorId());
+        message.setParseMode(MARKDOWN_PARSE_MODE);
+        message.setText(String.format(NEW_USER_TEXT, newUser.getUsername(), newUser.getAirport(), newUser.getBotLanguage(), newUser.getCreatedAt(), users.size()));
+
+        botSender.sendMessage(message);
     }
 
     @Scheduled(fixedDelay = CHECK_NEW_UNIQUE_VISITORS_DELAY_IN_MINUTES, timeUnit = TimeUnit.MINUTES)
