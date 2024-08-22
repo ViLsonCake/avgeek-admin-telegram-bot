@@ -6,6 +6,7 @@ import project.vilsoncake.avgeekadmintelegrambot.entity.document.UsersInfoDocume
 import project.vilsoncake.avgeekadmintelegrambot.entity.jpa.UserEntity;
 import project.vilsoncake.avgeekadmintelegrambot.repository.UserReadOnlyRepository;
 import project.vilsoncake.avgeekadmintelegrambot.repository.UsersInfoRepository;
+import project.vilsoncake.avgeekadmintelegrambot.service.UsersInfoService;
 
 import java.util.Date;
 import java.util.List;
@@ -36,6 +37,14 @@ public class UsersInfoServiceImpl implements UsersInfoService {
     @Override
     public UsersInfoDocument getLastAddedUsersInfo() {
         return usersInfoRepository.findFirstByOrderByDateDesc();
+    }
+
+    @Override
+    public boolean incrementUsersCount(UsersInfoDocument usersInfo, int usersCount) {
+        usersInfo.setUsersCount(usersCount);
+        usersInfoRepository.save(usersInfo);
+
+        return true;
     }
 
     @Override

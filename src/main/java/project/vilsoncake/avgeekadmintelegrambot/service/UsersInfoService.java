@@ -1,4 +1,4 @@
-package project.vilsoncake.avgeekadmintelegrambot.service.impl;
+package project.vilsoncake.avgeekadmintelegrambot.service;
 
 import project.vilsoncake.avgeekadmintelegrambot.entity.document.UsersInfoDocument;
 import project.vilsoncake.avgeekadmintelegrambot.entity.jpa.UserEntity;
@@ -10,5 +10,6 @@ public interface UsersInfoService {
     List<UserEntity> findAllEntities();
     UserEntity getLastAddedUserEntity();
     UsersInfoDocument getLastAddedUsersInfo();
+    boolean incrementUsersCount(UsersInfoDocument usersInfo, int usersCount);
     boolean addNewDailyUsersInfo();
 }

@@ -7,6 +7,7 @@ import project.vilsoncake.avgeekadmintelegrambot.dto.WeeklyReportDto;
 import project.vilsoncake.avgeekadmintelegrambot.entity.jpa.UserEntity;
 import project.vilsoncake.avgeekadmintelegrambot.service.BotService;
 import project.vilsoncake.avgeekadmintelegrambot.service.TrafficService;
+import project.vilsoncake.avgeekadmintelegrambot.service.UsersInfoService;
 import project.vilsoncake.avgeekadmintelegrambot.utils.MessageUtils;
 
 import java.util.List;

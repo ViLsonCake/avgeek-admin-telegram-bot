@@ -11,7 +11,7 @@ import project.vilsoncake.avgeekadmintelegrambot.entity.document.UsersInfoDocume
 import project.vilsoncake.avgeekadmintelegrambot.entity.jpa.UserEntity;
 import project.vilsoncake.avgeekadmintelegrambot.property.BotProperties;
 import project.vilsoncake.avgeekadmintelegrambot.service.TrafficService;
-import project.vilsoncake.avgeekadmintelegrambot.service.impl.UsersInfoService;
+import project.vilsoncake.avgeekadmintelegrambot.service.UsersInfoService;
 import project.vilsoncake.avgeekadmintelegrambot.utils.MessageUtils;
 
 import java.util.Date;
@@ -49,6 +49,7 @@ public class ScheduleSender {
 
         if (users.size() > todayUsersInfo.getUsersCount()) {
             UserEntity newUser = usersInfoService.getLastAddedUserEntity();
+            usersInfoService.incrementUsersCount(todayUsersInfo, users.size());
 
             SendMessage message = new SendMessage();
             message.setChatId(botProperties.getCreatorId());
