@@ -47,18 +47,16 @@ public class ScheduleSender {
 
         UsersInfoDocument todayUsersInfo = usersInfoService.getLastAddedUsersInfo();
 
-        if (users.size() == todayUsersInfo.getUsersCount()) {
-            return;
+        if (users.size() > todayUsersInfo.getUsersCount()) {
+            UserEntity newUser = usersInfoService.getLastAddedUserEntity();
+
+            SendMessage message = new SendMessage();
+            message.setChatId(botProperties.getCreatorId());
+            message.setParseMode(MARKDOWN_PARSE_MODE);
+            message.setText(String.format(NEW_USER_TEXT, newUser.getUsername(), newUser.getAirport(), newUser.getBotLanguage(), newUser.getCreatedAt(), users.size()));
+
+            botSender.sendMessage(message);
         }
-
-        UserEntity newUser = usersInfoService.getLastAddedUserEntity();
-
-        SendMessage message = new SendMessage();
-        message.setChatId(botProperties.getCreatorId());
-        message.setParseMode(MARKDOWN_PARSE_MODE);
-        message.setText(String.format(NEW_USER_TEXT, newUser.getUsername(), newUser.getAirport(), newUser.getBotLanguage(), newUser.getCreatedAt(), users.size()));
-
-        botSender.sendMessage(message);
     }
 
     @Scheduled(fixedDelay = CHECK_NEW_UNIQUE_VISITORS_DELAY_IN_MINUTES, timeUnit = TimeUnit.MINUTES)
