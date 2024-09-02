@@ -32,7 +32,7 @@ public class MessageUtils {
 
         for (UserEntity user : users) {
             index++;
-            table.append(String.format(tableColumnTemplate, index + ".", user.getUsername(), user.getAirport().toUpperCase()));
+            table.append(String.format(tableColumnTemplate, index + ".", user.getUsername(), user.getAirport()));
         }
 
         table.append(outline);
