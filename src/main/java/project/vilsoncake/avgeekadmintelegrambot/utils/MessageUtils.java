@@ -22,17 +22,20 @@ public class MessageUtils {
                 .orElse(0);
 
         int usersCount = users.size();
-        int indexLength = String.valueOf(usersCount).length() + 3;
+        int indexLength = String.valueOf(usersCount).length() + 1;
         int index = 0;
 
-        String tableColumnTemplate = String.format(TABLE_COLUMN_TEMPLATE, String.valueOf(usersCount).length() + 1, maxUsernameLength + 1);
-        String outline = "|" + "-".repeat(indexLength) + "|" + "-".repeat(maxUsernameLength + 3) + "|" + "-".repeat(5) + "|" + "\n";
+        String tableColumnTemplate = String.format(TABLE_COLUMN_TEMPLATE, String.valueOf(usersCount).length() + 1, maxUsernameLength);
+        String outline = "|" + "-".repeat(indexLength) + "|" + "-".repeat(maxUsernameLength + 2) + "|" + "-".repeat(5) + "|" + "\n";
 
         table.append(outline);
 
         for (UserEntity user : users) {
             index++;
-            table.append(String.format(tableColumnTemplate, index + ".", user.getUsername(), user.getAirport()));
+
+            String userAirport = user.getAirport() != null ? user.getAirport().toUpperCase() : "nil";
+
+            table.append(String.format(tableColumnTemplate, index + ".", user.getUsername(), userAirport));
         }
 
         table.append(outline);

@@ -1,7 +1,7 @@
 package project.vilsoncake.avgeekadmintelegrambot.constant;
 
 public class BotMessageConst {
-    public static final String TABLE_COLUMN_TEMPLATE = "| %%-%ss | %%-%ss | %%3s |\n";
+    public static final String TABLE_COLUMN_TEMPLATE = "|%%-%ss| %%-%ss | %%3s |\n";
     public static final String TRAFFIC_COLUMN_TEMPLATE = "| %%-%ss |\n";
     public static final String TRAFFIC_REFERRER_TEMPLATE = "• %s: %s";
     public static final String DELAY_TEMPLATE = "0 00 19 * * *";
